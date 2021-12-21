@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    image: sp_v3:latest
+    hostname: "localhost"
+    container_name: sp_v3
+    build: .
+    ports:
+      - "$AVAILABLE_IP:80:80"
+      - "$AVAILABLE_IP:443:443"
+      - "$AVAILABLE_IP:3000:3000"
+      - "$AVAILABLE_IP:6379:6379"
+      - "$AVAILABLE_IP:1025:1025"
+      - "$AVAILABLE_IP:1080:1080"
+    volumes:
+      - ./projects:/var/www/html/
+      # - ./db_data:/var/lib/postgresql
+      # - ./docker_assets/sites-enabled/:/etc/apache2/sites-enabled/
+      # - ./docker_assets/ssl_certificates_dec_2019/letsencrypt/:/etc/letsencrypt/
+      - ./nginx/ssl/:/etc/nginx/ssl
+      - ./docker_assets/startup:/startup
+      - ./nginx/sites-enabled/default:/etc/nginx/sites-enabled/default
+    stdin_open: true
+    tty: true
